@@ -1,10 +1,19 @@
 import express from "express";                              // Import thư viện express
+import homeController from "../controllers/homeController";
+
+
 let router = express.Router();                              // Tạo một instance router để định nghĩa các route
 
 let initWebRoutes = (app) => {
-    router.get('/', (req, res) => {                         // Định nghĩa route GET / trả về chuỗi "hello world with Eric"
-        return res.send("hello world van tuong ")
-    })
+    router.get('/',homeController.getHomePage);// goi den trang home 
+
+    router.get('/vantuong', (req, res) => {                         
+        return res.send("hello van tuong 2 ")
+    });
+
+
+
+
     return app.use("/", router)                             // Gắn router vào app tại root path "/"
 }
 
