@@ -1,0 +1,5 @@
+/node_modules       # ✅ Thư mục chứa thư viện – không nên đẩy lên Git
+/vendor             # 🔸 Dùng cho PHP/Laravel – nếu không dùng thì có thể xóa
+/.idea              # ✅ Cấu hình của IDE WebStorm, IntelliJ...
+.idea/              # ✅ Có thể để 1 dòng thôi là được
+.env                # ✅ Bảo vệ thông tin bí mật như API key, DB password

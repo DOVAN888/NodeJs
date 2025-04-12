@@ -1,0 +1,104 @@
+node -v      # kiểm tra phiên bản Node.js
+npm -v       # kiểm tra phiên bản npm
+npm init là lệnh để khởi tạo một dự án Node.js.
+Nó sẽ tạo ra một file có tên là: package.json – file quan trọng nhất trong một dự án Node.
+
+Press ^C at any time to quit.
+package name: (nodejs)
+version: (1.0.0)
+description: BackendNode js
+entry point: (index.js) server.js
+test command:
+git repository:
+keywords: fullStackNodejs express
+author: Van tuong
+license: (ISC)
+About to write to C:\Users\VAN TUONG\Documents\NodeJs\package.json:
+
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "BackendNode js ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fullStackNodejs",
+    "express"
+  ],
+  "author": "Van tuong",
+  "license": "ISC"
+}
+
+
+# Cài body-parser: dùng để phân tích dữ liệu từ request body (form, JSON)
+npm install body-parser
+
+# Cài dotenv: giúp đọc biến môi trường từ file .env (ẩn thông tin nhạy cảm như DB, API key)
+npm install dotenv
+
+# Cài ejs: template engine để render HTML động từ phía server
+npm install ejs
+
+# Cài express: framework backend nhanh gọn, dùng để tạo web server
+npm install express
+
+# Cài Babel: giúp viết ES6+ và chạy trên môi trường Node cũ
+# - @babel/core: nhân chính của Babel
+# - @babel/node: chạy trực tiếp file JS với Babel
+# - @babel/preset-env: preset cho ES6/ES7
+npm install @babel/core @babel/node @babel/preset-env
+
+# Cài nodemon: tự động restart server khi có thay đổi trong mã nguồn
+npm install nodemon
+//
+
+# Cài Babel (core, node, preset-env)
+# - @babel/core: công cụ chính của Babel để biên dịch JS
+# - @babel/node: cho phép chạy file JS bằng Babel mà không cần biên dịch thủ công
+# - @babel/preset-env: cho phép viết JS mới mà vẫn tương thích với các môi trường khác nhau
+npm install @babel/core @babel/node @babel/preset-env
+
+
+
+
+// trong file pakage.json    nodemon	Tự động restart server khi có thay đổi file
+// --exec babel-node	Dùng babel-node để chạy file có cú pháp ES6+
+// src/server.js	File khởi động server (nơi bạn viết express, viewEngine, routes)
+
+
+
+
+
+
+// cau truc forer node js 
+📁 node_modules          # Chứa thư viện cài bằng npm (không sửa)
+📁 src/                 # Thư mục chính chứa mã nguồn
+
+├─ 📁 config/            # File cấu hình chung (port, DB, biến môi trường)
+├─ 📁 controllers/       # Xử lý logic các route (GET, POST...)
+├─ 📁 public/            # Chứa file tĩnh như CSS, JS, ảnh
+├─ 📁 route/             # Khai báo các đường dẫn (URL)
+├─ 📁 services/          # Các hàm logic riêng (DB, API...)
+├─ 📁 views/             # Chứa file .ejs (template giao diện)
+├─ 📄 server.js          # Khởi động server chính
+
+📄 .babelrc              # Cấu hình Babel để dùng ES6+ trong Node
+📄 .env                  # Lưu biến môi trường (PORT, DB_URL...)
+📄 .env.example          # File mẫu để clone về điền biến môi trường
+📄 .gitignore            # Các file không đẩy lên Git
+📄 NodeJs.txt            # Ghi chú cá nhân (tùy chọn)
+📄 package.json          # Quản lý thư viện, script, thông tin dự án
+📄 package-lock.json     # Ghi lại chính xác version thư viện
+
+
+
+
+🔧 Vậy tại sao Node.js được dùng nhiều?
+Ưu điểm	Giải thích
+🔁 Không đồng bộ (async)	Phù hợp xử lý nhiều request cùng lúc
+⚡ Rất nhanh (V8 engine)	Node dùng engine của Chrome
+🔥 Dễ học với người biết JS	Học 1 ngôn ngữ làm cả frontend + backend
+📦 Hàng trăm ngàn thư viện npm	Có mọi thứ bạn cần: auth, DB, API, test...
+🌐 Phù hợp web real-time	Chat, game, socket.io, API live...
