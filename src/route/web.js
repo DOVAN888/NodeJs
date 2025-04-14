@@ -6,6 +6,8 @@ let router = express.Router();                              // Tạo một insta
 
 let initWebRoutes = (app) => {
     router.get('/',homeController.getHomePage);// goi den trang home 
+    router.get('/crud',homeController.getCRUD);// goi den trang home 
+    router.post('/post-crud',homeController.postCRUD);// goi den trang home 
 
     router.get('/vantuong', (req, res) => {                         
         return res.send("hello van tuong 2 ")
