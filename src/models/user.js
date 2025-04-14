@@ -1,25 +1,60 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // Ví dụ các quan hệ có thể thêm nếu bạn có bảng tương ứng:
+      // User.hasMany(models.Booking, { foreignKey: 'patientId' });
+      // User.belongsTo(models.Allcode, { foreignKey: 'keyRole', targetKey: 'key', as: 'roleData' });
     }
   }
+
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    gender: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    typeRole: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    keyRole: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'User',
+    tableName: 'Users',
+    timestamps: true
   });
+
   return User;
 };

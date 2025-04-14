@@ -1,6 +1,19 @@
-let getHomePage = (req, res) => {                         // Hàm xử lý trang chủ, nhận request và gửi response
+import db from '../models/index'
+
+let getHomePage = async (req, res) => {                         // Hàm xử lý trang chủ, nhận request và gửi response
     // return res.send("hello world from controller");       // Gửi nội dung text về client
-    return res.render('homepage.ejs')
+
+    try {
+         let data = await db.User.findAll()                        // ham findAll ti tat ca du lieu trong bang user
+       
+        return res.render('homepage.ejs', {
+        data:JSON.stringify(data)             // truyen bien data ra view chuyen tu data snag chuoi strinng
+    })
+        
+    } catch (e) {
+        console.log(e)
+    }
+   
 }
 
 module.exports = {
