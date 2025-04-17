@@ -32,9 +32,20 @@ let postCRUD = async(req, res) => {
      return res.send('get CRUD with van tuong ')
     
 }
+// lay du lieu trong database 
+let displayGetCRUD = async (req, res) => {
+    let data = await CRUDService.getAllUser()
+    console.log(data)
+    //return res.send('display get crud from controller')
+    return res.render('displayCRUD.ejs', {
+          dataTable:data
+      });
+    
+}
 
 module.exports = {
     getHomePage: getHomePage      ,                        // Export hàm để dùng bên ngoài (ví dụ trong route)
     getCRUD: getCRUD,
-    postCRUD:postCRUD,
+    postCRUD: postCRUD,
+    displayGetCRUD:displayGetCRUD,
 }

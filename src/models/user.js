@@ -4,8 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // Các quan hệ có thể thêm ở đây nếu cần
-      // Ví dụ:
+      // Ví dụ quan hệ:
       // User.belongsTo(models.Allcode, { foreignKey: 'roleId', targetKey: 'key', as: 'roleData' });
     }
   }
@@ -13,19 +12,51 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     id: {
       type: DataTypes.INTEGER,
+      allowNull: false,            // Không cho phép null
       primaryKey: true,
       autoIncrement: true
     },
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    address: DataTypes.STRING,
-    gender: DataTypes.BOOLEAN,
-    roleId: DataTypes.STRING,
-    phonenumber: DataTypes.STRING,
-    positionId: DataTypes.STRING,
-    image: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true                 // Không được trùng
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    gender: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true              // true = nam, false = nữ
+    },
+    roleId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    phonenumber: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    positionId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'User',

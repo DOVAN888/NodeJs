@@ -1,6 +1,7 @@
 // Import thư viện mã hóa mật khẩu
 import bcrypt from "bcryptjs";
-import db from "../models";
+import db from "../models/index.js";
+import { raw } from "body-parser";
 
 /**
  * ✅ Hàm hashUserPassword
@@ -8,6 +9,8 @@ import db from "../models";
  * @param {string} password - Mật khẩu gốc từ người dùng nhập vào
  * @returns {Promise<string>} - Trả về mật khẩu đã được mã hóa (hash)
  */
+
+// bam password
 let hashUserPassword = (password) => {
   return new Promise((resolve, reject) => {
     try {
@@ -26,36 +29,64 @@ let hashUserPassword = (password) => {
  * @param {Object} data - Dữ liệu đầu vào từ form: email, password, firstName, lastName, address
  * @returns {Object|null} - Trả về user object hoặc null nếu có lỗi
  */
+// tao user
 let createNewUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let hashPasswordFromBcrypt = await hashUserPassword(data.password); // Mã hóa mật khẩu
+        let hashPasswordFromBcrypt = await hashUserPassword(data.password); // Mã hóa mật khẩu
+        
+          const existingUser = await db.User.findOne({ where: { email: data.email } });
+
+      if (existingUser) {
+        return reject(new Error("❌ Email đã tồn tại!"));
+      }
+
+
+    //   console.log("📦 db.User:", db.User); // Debug: xem model User có đúng không
 
       // Tạo user trong DB
-   await db.User.create({
-  email: data.email,
-  password: hashPasswordFromBcrypt,
-  firstName: data.firstName || null,
-  lastName: data.lastName || null,
-  gender: data.gender === "1" ? true : false,
-  address: data.address || null,
-  roleId: data.roleId || null,
-  phonenumber: data.phonenumber || null,
-  positionId: data.positionId || null,
-  image: data.image || null
-});
+      await db.User.create({
+        email: data.email,
+        password: hashPasswordFromBcrypt,
+        firstName: data.firstName || null,
+        lastName: data.lastName || null,
+        gender: data.gender === "1" ? true : false,
+        address: data.address || null,
+        roleId: data.roleId || null,
+        phonenumber: data.phonenumber || null,
+        positionId: data.positionId || null,
+        image: data.image || null
+      });
 
-
-      resolve("✅ Create user successfully!");
+      resolve("Tạo tài khoản thành công!");
     } catch (e) {
-      console.error("❌ Error when creating user:", e.message);
-      console.error("📌 Full error object:", e);
-      reject(e);
+      if (e.name === "SequelizeUniqueConstraintError") {
+        return reject("Email đã tồn tại."); // lỗi trùng database
+      }
+
+      console.error("🔥 Lỗi nội bộ:", e.message); // chỉ log trong server
+      return reject("Đã xảy ra lỗi, vui lòng thử lại.");
     }
   });
 };
 
+//lay user
+// mot promise tuc la mot ham su lly bat dong bo 
+//raw:true dong nay de du lieu hien teo dang array cho de nhin 
+let getAllUser = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = db.User.findAll({raw:true});
+            resolve(users)
+        } catch (error) {
+            reject(error)
+            
+        }
+    })
+}
+
 // Export hàm ra để sử dụng ở nơi khác
 module.exports = {
-  createNewUser: createNewUser
+    createNewUser: createNewUser,
+    getAllUser:getAllUser,
 };
