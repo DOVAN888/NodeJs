@@ -1,51 +1,78 @@
-import db from '../models/index'
-import CRUDService from '../services/CRUDService'
+import db from '../models/index.js';
+import CRUDService from '../services/CRUDService.js';
 
-let getHomePage = async (req, res) => {                         // Hàm xử lý trang chủ, nhận request và gửi response
-    // return res.send("hello world from controller");       // Gửi nội dung text về client
+// Trang chủ
+let getHomePage = async (req, res) => {
+  try {
+    let data = await db.User.findAll();
+    return res.render('homepage.ejs', {
+      data: JSON.stringify(data)
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Lỗi server");
+  }
+};
 
+// Trang form CRUD
+let getCRUD = (req, res) => {
+  return res.render('crud.ejs');
+};
+
+// Tạo user mới
+let postCRUD = async (req, res) => {
+  let message = await CRUDService.createNewUser(req.body);
+  console.log(message);
+  return res.send("User created");
+};
+
+// Hiển thị form sửa user
+let getEditCRUD = async (req, res) => {
+  let userId = req.params.id;
+
+  if (userId) {
     try {
-         let data = await db.User.findAll()                        // ham findAll ti tat ca du lieu trong bang user
-       
-        return res.render('homepage.ejs', {
-        data:JSON.stringify(data)             // truyen bien data ra view chuyen tu data snag chuoi strinng
-    })
-        
+      let userData = await CRUDService.getUserInfoById(userId);
+      if (userData && userData.id) {
+        return res.render('editCRUD.ejs', { user: userData });
+      } else {
+        return res.send("❌ User not found");
+      }
     } catch (e) {
-        console.log(e)
+      console.error("🔥 Error:", e);
+      return res.status(500).send("❌ Internal server error");
     }
-   
-}
+  } else {
+    return res.send("❌ Missing user ID");
+  }
+};
 
-// tao controler crud 
-let getCRUD = (req, res)=>{
-    //return res.send('get CRUD with van tuong ')
-  
-    return res.render('crud.ejs');
-    
-}
-// tao post crud 
-let postCRUD = async(req, res) => {
-   let message= await CRUDService.createNewUser(req.body)
-   console.log(message);
+// ✅ Sửa đúng hàm PUT
+let putCRUD = async (req, res) => {
+  let data = req.body;
+  try {
+    let message = await CRUDService.updateUserData(data);
+    console.log(message);
+    return res.redirect('/get-crud'); // hoặc return res.send(message);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("❌ Lỗi khi cập nhật user");
+  }
+};
 
-     return res.send('get CRUD with van tuong ')
-    
-}
-// lay du lieu trong database 
+// Hiển thị danh sách user
 let displayGetCRUD = async (req, res) => {
-    let data = await CRUDService.getAllUser()
-    console.log(data)
-    //return res.send('display get crud from controller')
-    return res.render('displayCRUD.ejs', {
-          dataTable:data
-      });
-    
-}
+  let data = await CRUDService.getAllUser();
+  return res.render('displayCRUD.ejs', {
+    dataTable: data
+  });
+};
 
 module.exports = {
-    getHomePage: getHomePage      ,                        // Export hàm để dùng bên ngoài (ví dụ trong route)
-    getCRUD: getCRUD,
-    postCRUD: postCRUD,
-    displayGetCRUD:displayGetCRUD,
-}
+  getHomePage,
+  getCRUD,
+  postCRUD,
+  displayGetCRUD,
+  getEditCRUD,
+  putCRUD
+};

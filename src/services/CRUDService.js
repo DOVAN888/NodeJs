@@ -2,6 +2,7 @@
 import bcrypt from "bcryptjs";
 import db from "../models/index.js";
 import { raw } from "body-parser";
+import { where } from "sequelize";
 
 /**
  * ✅ Hàm hashUserPassword
@@ -84,9 +85,79 @@ let getAllUser = () => {
         }
     })
 }
+// edit user
+let getUserInfoById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId },
+                raw: true,
+            });
+
+            if (user) {
+                resolve(user); // trả về user nếu tìm thấy
+            } else {
+                resolve([]);   // hoặc trả về rỗng nếu không tìm thấy
+            }
+        } catch (e) {
+            reject(e); // lỗi kết nối hoặc truy vấn
+        }
+    });
+};
+//update data 
+let updateUserData = async (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.id) {
+        return reject("❌ Thiếu ID người dùng để cập nhật.");
+      }
+
+      const user = await db.User.findOne({ where: { id: data.id } });
+
+      if (!user) {
+        return reject("❌ Người dùng không tồn tại.");
+      }
+
+      // Nếu có mật khẩu mới thì mã hóa, nếu không thì giữ nguyên
+      let updatedPassword = user.password;
+      if (data.password && data.password.trim() !== "") {
+        updatedPassword = await hashUserPassword(data.password);
+      }
+
+      // Cập nhật thông tin
+      await db.User.update(
+        {
+          email: data.email,
+          password: updatedPassword,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          gender: data.gender === "1" ? true : false,
+          roleId: data.roleId,
+          positionId: data.positionId,
+          phonenumber: data.phonenumber,
+          image: data.image
+        },
+        {
+          where: { id: data.id }
+        }
+      );
+
+      resolve("✅ Cập nhật người dùng thành công!");
+    } catch (e) {
+      console.error("❌ Lỗi khi cập nhật:", e.message);
+      reject("❌ Cập nhật thất bại.");
+    }
+  });
+};
+
+
+
 
 // Export hàm ra để sử dụng ở nơi khác
 module.exports = {
     createNewUser: createNewUser,
-    getAllUser:getAllUser,
+    getAllUser: getAllUser,
+    getUserInfoById: getUserInfoById,
+    updateUserData:updateUserData
 };

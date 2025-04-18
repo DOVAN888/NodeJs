@@ -8,7 +8,9 @@ let initWebRoutes = (app) => {
     router.get('/',homeController.getHomePage);// goi den trang home 
     router.get('/crud',homeController.getCRUD);// goi den trang home 
     router.post('/post-crud',homeController.postCRUD);// goi den trang home 
+    router.post('/put-crud',homeController.putCRUD);// goi den trang home 
     router.get('/get-crud',homeController.displayGetCRUD);// goi den trang home 
+router.get('/edit-crud/:id', homeController.getEditCRUD); // ✅ đúng dạng /edit-crud/27
 
     router.get('/vantuong', (req, res) => {                         
         return res.send("hello van tuong 2 ")
