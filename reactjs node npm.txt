@@ -1,0 +1,17 @@
+react nodnpm
+// cai bootrap 
+ install bootstrap reactstrap react-toastify react-bootstrap-table-next react-bootstrap-table2-filter --legacy-peer-deps
+
+//State Management (Quản lý trạng thái)
+npm install redux react-redux redux-thunk redux-logger redux-persist redux-state-sync redux-auth-wrapper --legacy-peer-deps
+//npm install react-router react-router-dom connected-react-router --legacy-peer-deps
+npm install react-router react-router-dom connected-react-router --legacy-peer-deps
+// 5. Quốc tế hóa (Đa ngôn ngữ)
+npm install react-intl @formatjs/intl-pluralrules @formatjs/intl-relativetimeformat --legacy-peer-deps
+//✅✅ 6. Styling (CSS/SASS) 
+✅ 6. Styling (CSS/SASS)
+npm install sass --save
+//✅ 7. Hỗ trợ & Tiện ích
+npm install axios lodash moment typescript react-custom-scrollbars react-autosuggest react-flatpickr --legacy-peer-deps
+
+// ney lay project trenn mang ve thi thay vi dung npm start thi ta dung npm ci la tot nhat 

@@ -21,9 +21,10 @@ let getCRUD = (req, res) => {
 
 // Tạo user mới
 let postCRUD = async (req, res) => {
-  let message = await CRUDService.createNewUser(req.body);
+    let message = await CRUDService.createNewUser(req.body);
+      return res.redirect('/get-crud');
   console.log(message);
-  return res.send("User created");
+//   return res.send("User created");
 };
 
 // Hiển thị form sửa user
@@ -43,11 +44,11 @@ let getEditCRUD = async (req, res) => {
       return res.status(500).send("❌ Internal server error");
     }
   } else {
-    return res.send("❌ Missing user ID");
+    return res.send("Missing user ID");
   }
 };
 
-// ✅ Sửa đúng hàm PUT
+//  Sửa đúng hàm PUT
 let putCRUD = async (req, res) => {
   let data = req.body;
   try {
@@ -59,6 +60,21 @@ let putCRUD = async (req, res) => {
     return res.status(500).send("❌ Lỗi khi cập nhật user");
   }
 };
+
+// ham xoa 
+let deleteCRUD = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    await CRUDService.deleteUserById(userId);
+    return res.redirect('/get-crud');
+  } catch (error) {
+    console.error("❌ Error deleting user:", error);
+    return res.status(500).send(error);
+  }
+};
+
+
 
 // Hiển thị danh sách user
 let displayGetCRUD = async (req, res) => {
@@ -74,5 +90,6 @@ module.exports = {
   postCRUD,
   displayGetCRUD,
   getEditCRUD,
-  putCRUD
+    putCRUD,
+  deleteCRUD:deleteCRUD,
 };

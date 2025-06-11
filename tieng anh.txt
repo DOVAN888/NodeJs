@@ -1,0 +1,7 @@
+tieng anh
+
+maintenance: bao tri 
+SPA – Single Page Application
+
+/ORM = Object Relational Mapping la anh sa co so du lieu
+ Realtime: thoi gian thuc

@@ -4,9 +4,20 @@ import viewEngine from "./config/viewEngine";           // Import cấu hình Vi
 import initWebRoutes from './route/web';                // Import route định nghĩa các URL
 import dotenv from "dotenv";                            // Import dotenv để dùng biến môi trường từ .env
 import connectDB from "./config/connectDB";
+import cors from 'cors';
+
+
 dotenv.config();                                        // Load biến môi trường từ file .env
 
 let app = express();                                    // Tạo instance của Express
+app.use(cors({
+  origin: 'http://localhost:3000', // chỉ cho phép frontend này
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // nếu frontend dùng cookie hoặc auth header
+}));
+
+//  them phan cros 
+
 
 // Cấu hình middleware
 app.use(bodyParser.json());                             // Xử lý dữ liệu dạng JSON từ client (API, fetch, axios)

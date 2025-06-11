@@ -1,0 +1,115 @@
+co so de lieu cua app 
+Lưu thông tin tài khoản người dùng (có thể là admin, doctor, patient…)
+
+Thuộc tính	Giải thích
+id	ID người dùng (primary key, tự tăng)
+email	Email đăng nhập
+password	Mật khẩu (mã hóa)
+fullname	Họ tên đầy đủ
+address	Địa chỉ người dùng
+phonenumber	Số điện thoại
+gender	Giới tính (có thể dùng kèm với bảng allCode dạng ENUM)
+roleId	ID vai trò (liên kết với bảng allCode hoặc bảng roles)
+
+ Bảng admins, doctors, patients
+Danh sách các loại user cụ thể, có thể kế thừa từ bảng users qua roleId, không cần tạo bảng riêng nếu dùng chung users.
+
+ 3. Bảng schedule
+Lưu lịch khám của bác sĩ
+
+Thuộc tính	Giải thích
+id	ID lịch khám
+currentNumber	Số thứ tự hiện tại đã được đăng ký
+maxNumber	Số lượng bệnh nhân tối đa trong lịch đó
+date	Ngày khám
+timeType	Buổi (sáng/chiều/tối) – dùng với bảng allCode
+doctorId	Liên kết với bác sĩ thực hiện lịch này (users.id)
+
+ 4. Bảng history
+Lưu lại lịch sử khám bệnh
+
+Thuộc tính	Giải thích
+id	ID lịch sử khám
+patientId	ID bệnh nhân
+doctorId	ID bác sĩ
+description	Nội dung mô tả / kết luận khám
+
+ 5. Bảng booking
+Lưu thông tin đặt lịch của bệnh nhân
+
+Thuộc tính	Giải thích
+id	ID booking
+statusId	Trạng thái (đang chờ, đã xác nhận, đã khám...)
+doctorId	Bác sĩ đã chọn
+patientId	Người đặt lịch (bệnh nhân)
+date	Ngày đặt lịch
+timeType	Buổi đặt (sáng/chiều...) – dùng kèm với bảng allCode
+
+
+ 6. Bảng allCode
+Dùng để lưu các loại mã chung cho hệ thống (dạng ENUM)
+Ví dụ: role, gender, status, timeType, position...
+
+Thuộc tính	Giải thích
+id	ID của mã
+key	Nhóm mã (ví dụ: "GENDER", "ROLE", "STATUS", "TIME")
+type	Kiểu cụ thể bên trong (ví dụ: "M", "F", "R1", "S1")
+value	Giá trị hiển thị (ví dụ: "Male", "Female", "Admin", "Confirmed")
+
+ Gợi ý các liên kết (foreign key):
+users.roleId → allCode.id (type: ROLE)
+
+users.gender → allCode.id (type: GENDER)
+
+schedule.doctorId → users.id
+
+booking.doctorId → users.id
+
+booking.patientId → users.id
+
+history.patientId → users.id
+
+history.doctorId → users.id
+
+
+Loại quan hệ	Mô tả	Sequelize dùng
+1 – 1 (One to One)	Một bản ghi của bảng A liên kết với 1 bản ghi bảng B	hasOne ↔ belongsTo
+1 – N (One to Many)	Một bản ghi bảng A liên kết với nhiều bản ghi bảng B	hasMany ↔ belongsTo
+N – M (Many to Many)	Nhiều bản ghi bảng A liên kết với nhiều bản ghi bảng B	belongsToMany
+
+Sequelize	Mối quan hệ	Khóa ngoại nằm ở đâu?
+hasOne	1 – 1	Ở bảng bên phải
+hasMany	1 – N	Ở bảng bên phải
+belongsTo	ngược lại với 2 cái trên	Ở bảng hiện tại
+belongsToMany	N – M (phải có bảng trung gian)	Trong bảng trung gian
+
+
+ Giải thích chi tiết theo từng nhóm:
+🔹 ROLE – Vai trò người dùng:
+type	key	value	Ý nghĩa
+ROLE	R1	ADMIN	Quản trị viên
+ROLE	R2	DOCTOR	Bác sĩ
+ROLE	R3	PATIENT	Bệnh nhân
+→ Dùng trong bảng users.roleId để xác định loại người dùng
+
+🔹 STATUS – Trạng thái cuộc hẹn:
+type	key	value	Ý nghĩa
+STATUS	S1	NEW	Cuộc hẹn mới
+STATUS	S2	CONFIRMED	Đã xác nhận
+STATUS	S3	DONE	Đã khám xong
+STATUS	S4	CANCEL	Đã hủy
+→ Dùng trong bảng booking.statusId để biết tình trạng đặt lịch
+
+🔹 TIME – Khung giờ khám:
+type	key	value	Khung giờ
+TIME	T1	8:00 - 9:00	Buổi sáng
+TIME	T2	9:00 - 10:00	
+TIME	T3	10:00 - 11:00	
+TIME	T4	11:00 - 12:00	
+TIME	T5	13:00 - 14:00	Buổi chiều
+TIME	T6	14:00 - 15:00	
+TIME	T7	15:00 - 16:00	
+TIME	T8	16:00 - 17:00	
+→ Dùng trong schedule.timeType, booking.timeType để chọn khung giờ
+
+

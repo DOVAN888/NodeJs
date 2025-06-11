@@ -67,10 +67,48 @@ npm install @babel/core @babel/node @babel/preset-env
 // --exec babel-node	Dùng babel-node để chạy file có cú pháp ES6+
 // src/server.js	File khởi động server (nơi bạn viết express, viewEngine, routes)
 
+//ORM = Object Relational Mapping
+→ Là kỹ thuật ánh xạ giữa dữ liệu trong database (bảng) và object trong code (class, biến).
+//Cụm từ “Cao (non-blocking, async)” mô tả về cách mà Node.js xử lý công việc cực kỳ hiệu quả. Mình sẽ giải thích dễ hiểu nhất cho bạn nhé:
 
 
 
+cai dat de chay dataabse 
+npm install --save-dev sequelize-cli
+npm install sequelize mysql2            # Thư viện ORM và DB driver (ví dụ dùng MySQL)
+ sau cho chay lenh 
+npx sequelize-cli init
+npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+// cau lenh tao du lieu vao seeder de demo 
+npx sequelize-cli seed:generate --name demo-user
+// chen du lieu vao bang da tao trongDB
+npx sequelize-cli db:seed:all
 
+// xoa tat ca du lieu o seeder
+npx sequelize-cli db:seed:undo:all
+
+
+npx sequelize-cli db:migrate:undo        # Hoàn tác 1 file migration gần nhất
+npx sequelize-cli db:migrate             # Chạy lại
+// tao migration moi
+npx sequelize-cli migration:generate --name create-allcode
+
+
+// update table npx sequelize-cli migration:generate --name update-users-table
+
+
+no se tao ra 
+config/         # Cấu hình kết nối database (MySQL, PostgreSQL...)
+models/         # Các model đại diện cho bảng
+migrations/     # File mô tả thay đổi database (tạo bảng, thêm cột…)
+seeders/        # Dữ liệu mẫu để đẩy vào bảng
+
+//npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+tao mot du lieu mau 
+
+// npm install bcrypt
+cai cai nay de ma hoa mat khau nguoi dung 
 
 // cau truc forer node js 
 📁 node_modules          # Chứa thư viện cài bằng npm (không sửa)
@@ -102,3 +140,109 @@ npm install @babel/core @babel/node @babel/preset-env
 🔥 Dễ học với người biết JS	Học 1 ngôn ngữ làm cả frontend + backend
 📦 Hàng trăm ngàn thư viện npm	Có mọi thứ bạn cần: auth, DB, API, test...
 🌐 Phù hợp web real-time	Chat, game, socket.io, API live...
+
+
+
+📋 Tổng hợp các Status API (HTTP Status Codes)
+
+Mã	Ý nghĩa	Khi nào dùng
+1xx - Informational (Thông báo)		
+100	Continue	Client có thể tiếp tục gửi request
+101	Switching Protocols	Server đồng ý đổi giao thức
+102	Processing	Đang xử lý (WebDAV)
+
+2xx - Success (Thành công)		
+200	OK	Request thành công
+201	Created	Tạo mới thành công (POST)
+202	Accepted	Đã nhận request nhưng chưa xử lý xong
+204	No Content	Thành công, không trả dữ liệu
+
+3xx - Redirection (Chuyển hướng)		
+301	Moved Permanently	Chuyển hẳn sang URL mới
+302	Found	Chuyển tạm thời (redirect)
+304	Not Modified	Client lấy dữ liệu cache (không thay đổi)
+
+4xx - Client Error (Lỗi phía người dùng)		
+400	Bad Request	Request sai (thiếu field, sai format)
+401	Unauthorized	Không có quyền (chưa login hoặc token sai)
+403	Forbidden	Đã login nhưng không đủ quyền
+404	Not Found	URL hoặc tài nguyên không tồn tại
+405	Method Not Allowed	Dùng sai method (ví dụ POST thay vì GET)
+409	Conflict	Xung đột dữ liệu (ví dụ đăng ký email đã tồn tại)
+422	Unprocessable Entity	Dữ liệu đúng format nhưng không hợp lệ (validate lỗi)
+
+5xx - Server Error (Lỗi phía server)		
+500	Internal Server Error	Lỗi trong server
+502	Bad Gateway	Server backend chết, trả lỗi
+503	Service Unavailable	Server quá tải hoặc bảo trì
+504	Gateway Timeout	Server chờ backend nhưng hết thời gian
+🎯 Cách nhớ cực nhanh:
+
+Nhóm	Ý nghĩa
+1xx	Server đang nói "chờ đi"
+2xx	OK rồi, thành công! ✅
+3xx	"Tới chỗ khác đi" (Redirect) 🔄
+4xx	"Bạn sai rồi!" (Client error) ❌
+5xx	"Tôi (server) lỗi rồi!" (Server error) 💥
+📦 Một số status hay dùng nhất khi code API
+
+Status	Dùng khi
+200 OK	Gửi dữ liệu thành công (GET, POST thành công)
+201 Created	Tạo mới (POST) thành công
+204 No Content	Xoá xong nhưng không cần trả gì
+400 Bad Request	Body gửi sai, thiếu trường
+401 Unauthorized	Token hết hạn, login sai
+403 Forbidden	User không đủ quyền
+404 Not Found	Tài nguyên không tồn tại
+409 Conflict	Đăng ký bị trùng
+500 Internal Server Error	Lỗi server bất ngờ
+
+
+
+
+
+
+// 
+npm install cors@^2.8.5
+Lỗi CORS (Cross-Origin Resource Sharing) là lỗi trình duyệt chặn yêu cầu HTTP giữa các nguồn khác nhau (domain khác nhau) vì lý do bảo mật.
+➡️ Khi bạn gửi request từ 3000 đến 8080, trình duyệt xem đây là "cross-origin" (khác nguồn gốc) → nếu backend không cho phép truy cập từ nguồn đó, thì trình duyệt sẽ chặn lại và báo lỗi CORS.
+// npm install joi
+cai dat thu vien validate
+
+
+nvm use 14.17.0
+nvm use 18.20.8
+
+
+// thu vien Thư viện react-slick được dùng để tạo slider / carousel trong ReactHiển thị một bộ ảnh trượt hoặc nội dung trượt ngang/dọc
+npm install --save react-slick
+Thư viện react-slick phụ thuộc vào slick-carousel, nên bạn phải cài thêm thư viện đó nữa:
+npm install slick-carousel
+
+// thu vien nay de preview anh 
+npm install react-image-lightbox
+
+
+
+kintone react kyujin 
+https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=c9cf5999c5c88e49
+https://jp.indeed.com/jobs?q=kintone+react&start=10&vjk=4ddfce467892ace1&advn=8539140930978838
+https://jp.indeed.com/jobs?q=kintone+react+nodejs&l=&from=searchOnDesktopSerp&vjk=36605232f64ec85e
+https://jp.indeed.com/viewjob?jk=5c50541e998255ac&q=kintone+react+nodejs&tk=1iqcv0adqh12384b&from=web&advn=8539140930978838&adid=445392546&ad=-6NYlbfkN0Ah_Rv3rTC8I3N4pKSFCSM7YnsMz0xiklqDOEHIXVeIYIhzOOBao52VAr9dBue1LYQlRhsEaqiA8b18G0eWv-2ow6YKG8TchzmSSO-SOfYJhGAZP9fP5GBrAtEEmuzkzupMDC0KxHYvn6C_8bbE_BZ3g9GS36DlQ1OsyJ2_N08sEjrv1T6wfd-0UHBg5GP89MqdIit-iEWVW4_ugqDlEUf77AgjUJOUlRhvfbM14lklWZlUufnpj2S9k6YNQyBtOECLUKG6knhXdiJGzJd00Pkdh68jYF0e5G5x8G8-fkuji3qhKU5Pt67GGUtUUltRaGAqUqTdyCQx91N5OpUt32AjIo45CJTfi_pjXv1UshirRGF8oBw3WlwnT-PQ6v3tY2dLMPqI3in-k18un6KDu6iXrr8-f5r-6pbukHueucmBdJ_v9t7ABi6rNXM4py7CaocsbHus6hM9eApdRejRI0xnqh1PXdVSohmi21H_HbdLbO9rErNB96eseE5bjKHcpItdh9pdYmLNrVToLriQ9uXFEXH8a3-pGrlJJHeCUpd_Br0XQaaCby8N&pub=4a1b367933fd867b19b072952f68dceb&camk=ethIe0s0hecEcJwGC5c2rw%3D%3D&xkcb=SoDh6_M3yM2OiWzHV50IbzkdCdPP&xpse=SoBv6_I3yM2BWzgDaT0ObzkdCdPP&xfps=88c57abf-4030-4870-ac7a-690e39431c0a&vjs=3
+
+https://jp.indeed.com/jobs?q=kintone+react+nodejs&l=&from=searchOnDesktopSerp&vjk=2e0f14cf97199c46
+
+
+dac biet 
+
+https://jp.indeed.com/jobs?q=kintone+react+nodejs&start=10&vjk=259504bd7cfd2487
+
+
+kintone luong cao
+https://jp.indeed.com/jobs?q=kintone+nodejs+react&l=&from=searchOnDesktopSerp&vjk=f54a4b9059364f1e&advn=7561364398809642
+https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=141379cc0bf21978&advn=5939136938513135
+https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=9e663eadc3e9003b&advn=8058559819702895
+https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=4fa418aba0f79f38&advn=1764337020623200
+https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=eb73ed92c1b955ef
+https://jp.indeed.com/jobs?q=kintone+nodejs+react&l=&from=searchOnDesktopSerp&vjk=f54a4b9059364f1e&advn=7561364398809642
+https://jp.indeed.com/jobs?q=kintone+nodejs+react&l=&from=searchOnDesktopSerp&vjk=b818a604de98d23d

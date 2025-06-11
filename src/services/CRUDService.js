@@ -151,6 +151,25 @@ let updateUserData = async (data) => {
   });
 };
 
+// xoa du lieu
+let deleteUserById = async (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const deleted = await db.User.destroy({
+        where: { id: userId }
+      });
+
+      if (deleted === 0) {
+        return reject("❌ Không tìm thấy user để xóa.");
+      }
+
+      resolve("✅ Xóa user thành công!");
+    } catch (e) {
+      console.error("❌ Lỗi từ DB:", e);
+      reject("❌ Không thể xóa user.");
+    }
+  });
+};
 
 
 
@@ -159,5 +178,6 @@ module.exports = {
     createNewUser: createNewUser,
     getAllUser: getAllUser,
     getUserInfoById: getUserInfoById,
-    updateUserData:updateUserData
+    updateUserData: updateUserData,
+    deleteUserById:deleteUserById,
 };
