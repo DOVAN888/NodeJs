@@ -22,14 +22,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    value_en: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    value_vi: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
+    valueEn: {
+        type: DataTypes.STRING,
+      field: 'value_en',
+        
+      },
+      valueVi: {
+        type: DataTypes.STRING,
+        field: 'value_vi',
+         allowNull: false
+}
+
   }, {
     sequelize,
     modelName: 'Allcode',

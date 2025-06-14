@@ -4,22 +4,37 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // Ví dụ quan hệ:
-      // User.belongsTo(models.Allcode, { foreignKey: 'roleId', targetKey: 'key', as: 'roleData' });
+      User.belongsTo(models.Allcode, {
+        foreignKey: 'positionId',
+        targetKey: 'key',
+        as: 'positionData'
+      });
+
+      User.belongsTo(models.Allcode, {
+        foreignKey: 'gender',
+        targetKey: 'key',
+        as: 'genderData'
+      });
+
+      User.belongsTo(models.Allcode, {
+        foreignKey: 'roleId',
+        targetKey: 'key',
+        as: 'roleData'
+      });
     }
   }
 
   User.init({
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,            // Không cho phép null
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true                 // Không được trùng
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
@@ -39,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: true              // true = nam, false = nữ
+      allowNull: true
     },
     roleId: {
       type: DataTypes.STRING,

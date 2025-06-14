@@ -224,6 +224,15 @@ npm install react-image-lightbox
 
 
 
+
+
+mysql 
+Mục	belongsTo	hasMany
+Quan hệ	Nhiều bản ghi thuộc về 1 bản ghi khác	1 bản ghi có thể chứa nhiều bản ghi khác
+Vị trí foreign key (FK)	FK nằm ở bảng hiện tại	FK nằm ở bảng khác
+Truy vấn JOIN	Dùng để JOIN từ child → parent	Dùng để JOIN từ parent → children
+Ví dụ	User.belongsTo(Role) → mỗi User có 1 role	Role.hasMany(User) → mỗi Role có nhiều user
+
 kintone react kyujin 
 https://jp.indeed.com/q-kintone-react-%E6%B1%82%E4%BA%BA.html?vjk=c9cf5999c5c88e49
 https://jp.indeed.com/jobs?q=kintone+react&start=10&vjk=4ddfce467892ace1&advn=8539140930978838

@@ -1,6 +1,7 @@
 import express from "express";                              // Import thư viện express
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import doctorController from "../controllers/doctorController";
 import route from "color-convert/route";
 
 
@@ -28,7 +29,8 @@ let initWebRoutes = (app) => {
 
     // phan slider 
         router.get('/api/allcode', userController.getAllCode)// delete user
-
+    //load lay ra  ba si hang dau api roleId = R2
+        router.get('/api/top-doctor-home', doctorController.getTopDoctorHome)
 
     router.get('/vantuong', (req, res) => {                         
         return res.send("hello van tuong 2 ")
