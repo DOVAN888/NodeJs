@@ -28,9 +28,30 @@ let initWebRoutes = (app) => {
        router.delete('/api/delete-users', userController.handleDeleteUser)// delete user
 
     // phan slider 
-        router.get('/api/allcode', userController.getAllCode)// delete user
+    router.get('/api/allcode', userController.getAllCode)// delete user
+    
     //load lay ra  ba si hang dau api roleId = R2
-        router.get('/api/top-doctor-home', doctorController.getTopDoctorHome)
+    router.get('/api/top-doctor-home', doctorController.getTopDoctorHome)
+    // lay tat ca bac si 
+    router.get('/api/get-all-doctors', doctorController.getAllDoctors)
+    // luu info cua bac si (trang chi tiet bac si )
+    router.post('/api/save-info-doctors', doctorController.postInforDoctors)
+    // lay api cho trang chi tiet cua bac si 
+        router.get('/api/get-detail-doctor-by-id', doctorController.getDetailDoctorById)
+    // lay du lieu datetime de dat lich kham 
+    router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule)
+    // lay du lieu bang lich time da dat cua bac si 
+    router.get('/api/get-schedules-by-doctor', doctorController.getSchedulesByDoctor)
+      // xoa du lieu da dat tu ba si  
+    router.delete('/api/delete-schedules-by-date', doctorController.deleteSchedulesByDate)
+    // create booking api 
+     router.post('/api/create-booking', doctorController.CreateBooking)
+
+
+   
+        
+
+
 
     router.get('/vantuong', (req, res) => {                         
         return res.send("hello van tuong 2 ")

@@ -3,68 +3,51 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('bookings', {
+    await queryInterface.createTable('doctor_infor', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
       },
-      statusId: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       doctorId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true  ,
+        references: {
+          model: 'users', // foreign key tham chiếu users.id
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      priceId: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      patientId: {
+      provinceId: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      paymentId: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      addressClinic: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      nameClinic: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      note: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      count: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      date: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      timeType: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reason: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      gender: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      phoneNumber: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      birthday: {
-        type: Sequelize.DATEONLY,
-        allowNull: true
-      },
-      province: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      district: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      forWhom: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      paymentType: {
-        type: Sequelize.STRING,
-        allowNull: true
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
@@ -80,6 +63,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('bookings');
+    await queryInterface.dropTable('doctor_infor');
   }
 };

@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
   class Allcode extends Model {
     static associate(models) {
       // Gợi ý: Quan hệ với User, Booking, Schedule nếu cần
+      Allcode.hasMany(models.Schedule, {
+        foreignKey: 'timeType',
+        as: 'timeTypeData'
+      });
+
     }
   }
 

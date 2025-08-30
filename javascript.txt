@@ -1,0 +1,150 @@
+📦 TỔNG HỢP CÁC HÀM THAO TÁC MẢNG TRONG JS
+🔹 1️⃣ push()
+👉 Thêm phần tử vào cuối mảng.
+
+js
+コピーする
+編集する
+const arr = [1, 2];
+arr.push(3);  // arr = [1, 2, 3]
+🔹 2️⃣ unshift()
+👉 Thêm phần tử vào đầu mảng.
+
+js
+コピーする
+編集する
+const arr = [2, 3];
+arr.unshift(1);  // arr = [1, 2, 3]
+🔹 3️⃣ pop()
+👉 Xóa phần tử cuối mảng, trả về phần tử bị xóa.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+const last = arr.pop();  // arr = [1, 2], last = 3
+🔹 4️⃣ shift()
+👉 Xóa phần tử đầu mảng, trả về phần tử bị xóa.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+const first = arr.shift();  // arr = [2, 3], first = 1
+🔹 5️⃣ includes()
+👉 Kiểm tra mảng có chứa giá trị không (true hoặc false).
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+arr.includes(2);  // true
+arr.includes(5);  // false
+🔹 6️⃣ filter()
+👉 Tạo mảng mới gồm các phần tử thỏa điều kiện.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4];
+const even = arr.filter(x => x % 2 === 0);  // [2, 4]
+🔹 7️⃣ map()
+👉 Tạo mảng mới bằng cách biến đổi từng phần tử.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+const squared = arr.map(x => x * x);  // [1, 4, 9]
+🔹 8️⃣ find()
+👉 Tìm phần tử đầu tiên thỏa điều kiện.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4];
+const found = arr.find(x => x > 2);  // 3
+🔹 9️⃣ findIndex()
+👉 Tìm index của phần tử đầu tiên thỏa điều kiện.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4];
+const index = arr.findIndex(x => x > 2);  // 2
+🔹 🔟 forEach()
+👉 Lặp qua mảng (nhưng không trả mảng mới).
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+arr.forEach(x => console.log(x));
+🔹 ⓫ some()
+👉 Kiểm tra ít nhất một phần tử thỏa điều kiện (true hoặc false).
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+arr.some(x => x > 2);  // true
+🔹 ⓬ every()
+👉 Kiểm tra tất cả phần tử thỏa điều kiện (true hoặc false).
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3];
+arr.every(x => x > 0);  // true
+🔹 ⓭ slice()
+👉 Tạo mảng mới cắt từ vị trí start đến end (không bao gồm end).
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4, 5];
+const sub = arr.slice(1, 4);  // [2, 3, 4]
+🔹 ⓮ splice()
+👉 Xóa/thêm phần tử ngay tại mảng gốc.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4, 5];
+arr.splice(2, 1);  // Xóa phần tử tại index 2 ⇒ arr = [1, 2, 4, 5]
+arr.splice(2, 0, 99);  // Thêm 99 tại index 2 ⇒ arr = [1, 2, 99, 4, 5]
+🔹 ⓯ concat()
+👉 Nối 2 mảng thành mảng mới.
+
+js
+コピーする
+編集する
+const a = [1, 2];
+const b = [3, 4];
+const c = a.concat(b);  // [1, 2, 3, 4]
+🔹 ⓰ reduce()
+👉 Tính toán giá trị duy nhất từ tất cả phần tử.
+
+js
+コピーする
+編集する
+const arr = [1, 2, 3, 4];
+const sum = arr.reduce((acc, x) => acc + x, 0);  // 10
+🎯 Tóm tắt cực dễ nhớ:
+Hàm	Ý nghĩa	Kết quả trả về
+push	Thêm cuối mảng	new length
+unshift	Thêm đầu mảng	new length
+pop	Xoá cuối	phần tử bị xoá
+shift	Xoá đầu	phần tử bị xoá
+includes	Kiểm tra tồn tại	true / false
+filter	Lọc phần tử	mảng mới
+map	Biến đổi phần tử	mảng mới
+find	Tìm phần tử đầu tiên	phần tử
+findIndex	Tìm vị trí phần tử đầu tiên	index
+forEach	Duyệt mảng	undefined
+some	Có ít nhất 1 thoả không	true / false
+every	Tất cả thoả không	true / false
+slice	Cắt mảng	mảng mới
+splice	Xoá/thêm tại chỗ	mảng phần tử xoá
+concat	Nối mảng	mảng mới
+reduce	Tích luỹ giá trị	1 giá trị duy nhất

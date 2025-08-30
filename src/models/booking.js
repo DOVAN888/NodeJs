@@ -4,11 +4,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     static associate(models) {
-      // Định nghĩa quan hệ
-    //   Booking.belongsTo(models.User, { foreignKey: 'patientId', as: 'patientData' });
-    //   Booking.belongsTo(models.User, { foreignKey: 'doctorId', as: 'doctorData' });
-    //   Booking.belongsTo(models.Allcode, { foreignKey: 'statusId', targetKey: 'key', as: 'statusData' });
-    //   Booking.belongsTo(models.Allcode, { foreignKey: 'timeType', targetKey: 'key', as: 'timeTypeData' });
+      Booking.belongsTo(models.User, { foreignKey: 'patientId', as: 'patientData' });
+      Booking.belongsTo(models.User, { foreignKey: 'doctorId', as: 'doctorData' });
+      Booking.belongsTo(models.Allcode, { foreignKey: 'statusId', targetKey: 'key', as: 'statusData' });
+      Booking.belongsTo(models.Allcode, { foreignKey: 'timeType', targetKey: 'key', as: 'timeTypeData' });
     }
   }
 
@@ -39,6 +38,38 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     reason: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    birthday: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    province: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    district: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    forWhom: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    paymentType: {
       type: DataTypes.STRING,
       allowNull: true
     }

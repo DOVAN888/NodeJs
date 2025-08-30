@@ -279,8 +279,6 @@ let getAllCodeService = (typeInput) => {
        resolve(res)
       }
      
-      
-      
     } catch (e) {
       reject(e)
       

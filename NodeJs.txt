@@ -143,6 +143,16 @@ cai cai nay de ma hoa mat khau nguoi dung
 
 
 
+
+// javascript 
+// array.filter(item => condition)
+// array.map(item => transformation)
+// array.includes(value)
+// includes	🔍 Kiểm tra có tồn tại trong mảng không
+// push	➕ Thêm vào cuối mảng
+// unshift	➕ Thêm vào đầu mảng
+
+
 📋 Tổng hợp các Status API (HTTP Status Codes)
 
 Mã	Ý nghĩa	Khi nào dùng

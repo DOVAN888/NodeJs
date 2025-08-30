@@ -21,8 +21,21 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'key',
         as: 'roleData'
       });
+
+      
+ // User model
+    User.hasOne(models.Markdown, {
+      foreignKey: 'doctorId',
+      targetKey: 'id',
+      as :'markdownData'
+    });
+  // hasone ket noi A va B foreignkey o tableB
+  // belongto ket noi A va B foreignkey o table A
+  // many to many ket noi A va B foreignkey o tableB
     }
   }
+
+
 
   User.init({
     id: {
